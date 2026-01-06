@@ -6,33 +6,66 @@ INPUT_FILE = "output.txt"
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
 MODEL_NAME = "llama3"
 
-def parse_with_llm(input_path):
+def parse_with_llm(raw_text, doc_type="invoice"):
     """
-    Reads raw text and uses Llama 3 (via Ollama) to extract structured JSON.
+    Uses Llama 3 to extract structured JSON from raw text.
     """
-    if not os.path.exists(input_path):
-        print(f"Error: {input_path} not found. Run extract_text.py first.")
-        return
-
-    with open(input_path, "r", encoding="utf-8") as f:
-        raw_text = f.read()
-
-    print("Loading text into LLM context...")
-
-    # Strict System Prompt to force JSON structure
-    system_prompt = """
-    You are an AI assistant that extracts structured data from documents.
-    You MUST output ONLY valid JSON. No preamble, no markdown formatting, no explanations.
     
-    Extract the following fields from the provided invoice text:
-    - invoice_number (string or null)
-    - date (string YYYY-MM-DD or null)
-    - vendor_name (string or null)
-    - total_amount (number or null)
-    - items (list of objects with 'description' and 'amount')
-    
-    If a field is missing, use null.
-    """
+    # Select prompt based on document type
+    if doc_type == "resume":
+        system_prompt = """
+        You are an AI assistant that extracts structured data from resumes.
+        You MUST output ONLY valid JSON.
+        Extract:
+        - full_name (string)
+        - email (string)
+        - phone (string)
+        - skills (list of strings)
+        - experience (list of objects with company, role, duration)
+        - education (list of objects with institution, degree)
+        """
+    else: # Default to Invoice
+        system_prompt = """
+        You are an AI assistant that extracts structured data from invoices.
+        The document may contain multiple pages. You MUST extract all line items from EVERY page.
+        
+        You MUST output ONLY valid JSON using the exact schema below.
+        
+        REQUIRED SCHEMA:
+        {
+          "invoice_metadata": {
+            "invoice_number": "string",
+            "invoice_date": "YYYY-MM-DD",
+            "currency": "string (e.g. EUR, USD)"
+          },
+          "seller": {
+            "company_name": "string",
+            "address": "string",
+            "phone": "string"
+          },
+          "buyer": {
+            "name": "string",
+            "address": "string",
+            "phone": "string"
+          },
+          "line_items": [
+            {
+              "description": "string",
+              "quantity": number,
+              "unit_price": number,
+              "line_total": number
+            }
+          ],
+          "totals": {
+            "subtotal": number,
+            "tax": number,
+            "shipping": number,
+            "total_due": number
+          }
+        }
+        
+        If a field is missing, use null. ensure numeric values are numbers, not strings.
+        """
 
     prompt = f"DOCUMENT TEXT:\n{raw_text}\n\nJSON OUTPUT:"
 
@@ -41,34 +74,34 @@ def parse_with_llm(input_path):
         "prompt": prompt,
         "system": system_prompt,
         "stream": False,
-        "format": "json"  # Forces Ollama to output valid JSON
+        "format": "json"
     }
 
     try:
-        print(f"Sending request to Ollama ({MODEL_NAME})...")
+        # print(f"Sending request to Ollama ({MODEL_NAME})...")
         response = requests.post(OLLAMA_API_URL, json=payload)
         response.raise_for_status()
         
         result = response.json()
         generated_text = result.get("response", "")
         
-        # Parse logic to ensure it's valid JSON
         structured_data = json.loads(generated_text)
-        
-        print("\n--- EXTRACTED JSON DATA ---\n")
-        print(json.dumps(structured_data, indent=4))
-        
-        # Save to file
-        with open("result.json", "w", encoding="utf-8") as f:
-            json.dump(structured_data, f, indent=4)
-        print("\nSaved to result.json")
+        return structured_data
 
     except requests.exceptions.RequestException as e:
         print(f"Error communicating with Ollama: {e}")
-        print("Make sure Ollama is running (ollama serve) and Llama 3 is pulled (ollama pull llama3).")
+        return {"error": str(e)}
     except json.JSONDecodeError:
         print("Error: LLM did not return valid JSON.")
-        print("Raw Output:", generated_text)
+        return {"error": "Invalid JSON response from LLM", "raw_output": generated_text}
 
 if __name__ == "__main__":
-    parse_with_llm(INPUT_FILE)
+    if os.path.exists(INPUT_FILE):
+        with open(INPUT_FILE, "r", encoding="utf-8") as f:
+            text = f.read()
+        
+        data = parse_with_llm(text, "invoice")
+        print(json.dumps(data, indent=4))
+        
+        with open("result.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
