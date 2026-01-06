@@ -1,0 +1,68 @@
+{
+    "invoice_number": "BPXINV-00550",
+    "date": "2021-05-23",
+    "vendor_name": null,
+    "total_amount": 6610.95,
+    "items": [
+        {
+            "description": "Dextromethorphan polistirex",
+            "amount": 124.5
+        },
+        {
+            "description": "Venlafaxine Hydrochloride",
+            "amount": 400.0
+        },
+        {
+            "description": "Metoclopramide Hydrochloride",
+            "amount": 249.75
+        },
+        {
+            "description": "Avobenzone, octinoxate",
+            "amount": 44.5
+        },
+        {
+            "description": "Verapamil hydrochloride",
+            "amount": 78.9
+        },
+        {
+            "description": "Tiagabine hydrochloride",
+            "amount": 153.75
+        },
+        {
+            "description": "Ziprasidone hydrochloride",
+            "amount": 349.9
+        },
+        {
+            "description": "Risperidone",
+            "amount": 349.9
+        },
+        {
+            "description": "Metoprolol succinate",
+            "amount": 349.9
+        },
+        {
+            "description": "Acetaminophen",
+            "amount": 349.9
+        },
+        {
+            "description": "Sorafenib",
+            "amount": 240.0
+        },
+        {
+            "description": "Telmisartan",
+            "amount": 149.85
+        },
+        {
+            "description": "Famotidine",
+            "amount": 66.75
+        },
+        {
+            "description": "Methylphenidate Hydrochloride",
+            "amount": 118.35
+        },
+        {
+            "description": "Ibuprofen",
+            "amount": 99.0
+        }
+    ]
+}

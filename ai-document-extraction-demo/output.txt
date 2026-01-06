@@ -1,0 +1,213 @@
+--- Page 1 ---
+Bioplex INVOICE
+
+we love chemistry
+
+5 Rue Bader
+Narbonne, Aude, 11100
+Phone: +33 140 260294
+
+INVOICE # BPXINV-00550
+DATE: 23.05.2021
+
+TO: SHIP TO:
+
+Roger Bigot Roger Bigot
+
+bonbono bonbono
+
+4 Rue des Cites 4 Rue des Cites
+
+Aubervilliers, Seine-Saint-Denis, 93300 Aubervilliers, Seine-Saint-Denis, 93300
+Phone: +33 148 340990 Phone: +33 148 340990
+
+COMMENTS OR SPECIAL INSTRUCTIONS:
+
+None
+SALESPERSON P.O. NUMBER TERMS
+Marianne de la Guillaume BPXPO-00536 Due after 30 days
+QUANTITY DESCRIPTION UNIT PRICE TOTAL
+
+10 Dextromethorphan polistirex 12.45 124.50
+BPXPN-00057
+
+25 Venlafaxine Hydrochloride 16.00 400.00
+BPXPN-00012
+
+25 Metoclopramide Hydrochloride (BPxPo-00537) 9.99 249.75
+BPXPN-00002
+
+10 Avobenzone, octinoxate (BPxP0-00538) 4.45 44.50
+BPXPN-00027
+
+10 Verapamil hydrochloride 7.89 78.90
+BPXPN-00066
+
+15 Tiagabine hydrochloride 10.25 153.75
+BPXPN-00017
+
+10 Ziprasidone hydrochloride (gPxPo-00537) 34.99 349.90
+BPXPN-00044
+
+10 Risperidone 34.99 349.90
+BPXPN-00023
+
+10 Metoprolol succinate 34.99 349.90
+BPXPN-00067
+
+10 Acetaminophen 34.99 349.90
+BPXPN-00045
+
+15 Sorafenib 16.00 240.00
+BPXPN-00018
+
+15 Telmisartan 9.99 149.85
+BPXPN-00022
+
+15 Famotidine 4.45 66.75
+BPXPN-00068
+
+15 Methylphenidate Hydrochloride 7.89 118.35
+
+BPXPN-00005
+
+100 Ibuprofen (BPxP0-00538) 0.99 99.00
+
+--- Page 2 ---
+15
+
+15
+
+10
+
+10
+
+10
+
+25
+
+25
+
+10
+
+25
+
+25
+
+15
+
+15
+
+25
+
+BPXPN-00052
+
+Metformin Hydrochloride (gPxPo-00538)
+BPXPN-00046
+
+Avobenzone, Octisalate and Octocrylene
+BPXPN-00069
+
+Carisoprodol
+BPXPN-00070
+
+Losartan Potassium
+BPXPN-00047
+
+Pentazocine Hydrochloride and Naloxone Hydrochloride
+BPXPN-00051
+
+Omeprazole
+BPXPN-00071
+
+Losartan Potassium
+BPXPN-00019
+
+Saline
+BPXPN-00048
+
+Titanium dioxide
+BPXPN-00021
+
+Bicalutamide (BPxPo-00538)
+BPXPN-00049
+
+Ampicillin sodium
+BPXPN-00050
+
+Octinoxate, Titanium Dioxide, Octisalate
+BPXPN-00004
+
+Cavia porcellus hair and cavia porcellus skin
+BPXPN-00020
+
+2.15
+
+16.99
+
+34.99
+
+34.99
+
+34.99
+
+9.99
+
+4.45
+
+7.89
+
+10.25
+
+2.15
+
+16.99
+
+12.45
+
+12.45
+
+SUBTOTAL
+SALES TAX
+
+SHIPPING & HANDLING
+
+Make all checks payable to Bioplex
+If you have any questions concerning this invoice, contact Marianne de la Guillaume, +33 140 260294,
+marianne.guillaume@bioplex.fr
+
+THANK YOU FOR YOUR BUSINESS!
+
+TOTAL DUE
+
+32.25
+
+254.85
+
+349.90
+
+349.90
+
+349.90
+
+249.75
+
+111.25
+
+78.90
+
+256.25
+
+53.75
+
+254.85
+
+186.75
+
+311.25
+
+5964.50
+596.45
+50.00
+6610.95
+
