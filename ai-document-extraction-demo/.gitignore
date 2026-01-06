@@ -1,0 +1,17 @@
+# Virtual Environment
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Temporary Files
+temp/
+output.txt
+result.json
+batch_results.json
+
+# IDEs
+.vscode/
+.idea/

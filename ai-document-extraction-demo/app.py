@@ -17,54 +17,65 @@ with st.sidebar:
     st.info(f"Mode: Extracting {doc_type} data")
 
 # File Uploader
-uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
+uploaded_files = st.file_uploader("Upload PDF files", type=["pdf"], accept_multiple_files=True)
 
-if uploaded_file is not None:
-    st.success("File uploaded successfully!")
+if uploaded_files:
+    st.success(f"Uploaded {len(uploaded_files)} files. Ready to process.")
     
-    # Save file temporarily to disk because pdf2image needs a file path
-    temp_dir = "temp"
-    os.makedirs(temp_dir, exist_ok=True)
-    temp_path = os.path.join(temp_dir, uploaded_file.name)
-    
-    with open(temp_path, "wb") as f:
-        f.write(uploaded_file.getbuffer())
+    if st.button("Process Batch"):
+        results = []
+        progress_bar = st.progress(0)
+        
+        # Create tabs for detailed view
+        tabs = st.tabs([f.name for f in uploaded_files])
+        
+        temp_dir = "temp"
+        os.makedirs(temp_dir, exist_ok=True)
 
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.subheader("1. OCR Extraction (Tesseract)")
-        with st.spinner("Extracting text from PDF..."):
-            raw_text = extract_text_from_pdf(temp_path)
+        for i, uploaded_file in enumerate(uploaded_files):
+            # Save file temporarily
+            temp_path = os.path.join(temp_dir, uploaded_file.name)
+            with open(temp_path, "wb") as f:
+                f.write(uploaded_file.getbuffer())
             
-        if raw_text:
-            with st.expander("View Raw Extracted Text", expanded=False):
-                st.text_area("Raw Text", raw_text, height=300)
-        else:
-            st.error("OCR failed to extract text.")
-            st.stop()
-
-    with col2:
-        st.subheader("2. AI Analysis (Llama 3)")
-        if st.button("Extract Data with Llama 3"):
-            with st.spinner("Analyzing text with Llama 3..."):
-                start_time = time.time()
-                structured_data = parse_with_llm(raw_text, doc_type.lower())
-                end_time = time.time()
+            with tabs[i]:
+                st.subheader(f"Processing: {uploaded_file.name}")
                 
-            st.success(f"Analysis Complete in {end_time - start_time:.2f}s")
+                # 1. OCR
+                with st.spinner("Step 1: OCR Extraction..."):
+                    raw_text = extract_text_from_pdf(temp_path)
+                
+                if raw_text:
+                    with st.expander("View Raw OCR Text"):
+                        st.text_area("Content", raw_text, height=150)
+                        
+                    # 2. LLM
+                    with st.spinner("Step 2: AI Analysis..."):
+                        structured_data = parse_with_llm(raw_text, doc_type.lower())
+                    
+                    st.json(structured_data)
+                    results.append({
+                        "filename": uploaded_file.name,
+                        "data": structured_data
+                    })
+                else:
+                    st.error("OCR Failed.")
+                    results.append({"filename": uploaded_file.name, "error": "OCR Failed"})
             
-            st.subheader("Structured Output")
-            st.json(structured_data)
-            
-            # Download button
-            json_str = json.dumps(structured_data, indent=4)
-            st.download_button(
-                label="Download JSON",
-                data=json_str,
-                file_name=f"{doc_type.lower()}_data.json",
-                mime="application/json"
-            )
+            # Update progress
+            progress_bar.progress((i + 1) / len(uploaded_files))
 
-    # Cleanup temp file (optional, depends on use case)
-    # os.remove(temp_path)
+        st.success("Batch Processing Complete!")
+        
+        # Summary Section
+        st.divider()
+        st.header("Batch Summary")
+        
+        # Create a downloadable merged JSON
+        merged_json = json.dumps(results, indent=4)
+        st.download_button(
+            label="Download All Results (JSON)",
+            data=merged_json,
+            file_name="batch_results.json",
+            mime="application/json"
+        )
